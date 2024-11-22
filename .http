@@ -1,0 +1,19 @@
+### User Registration
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
+### User Login
+# @name login
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
