@@ -17,3 +17,18 @@ Content-Type: application/json
   "password": "testpassword"
 }
 
+### Get All Products
+@token = {{login.response.body.token}}
+GET http://localhost:3000/products
+Authorization: Bearer {{token}}
+
+### Get specific Product
+@token = {{login.response.body.token}}
+GET http://localhost:3000/products/1
+Authorization: Bearer {{token}}
+
+### Get all orders of logged in User
+@token = {{login.response.body.token}}
+GET http://localhost:3000/orders
+Authorization: Bearer {{token}}
+
