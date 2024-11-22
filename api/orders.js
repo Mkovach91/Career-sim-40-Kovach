@@ -8,7 +8,10 @@ router.get("/", authenticate, async (req, res, next)=> {
   try {
     const orders = await prisma.order.findMany({
       where: { customerId: req.user.id },
-    })
+      include: {
+        items: true,
+      },
+    });
     res.json(orders)
   } catch (error) {
     next(error)
