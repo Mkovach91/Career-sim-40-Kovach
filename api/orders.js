@@ -16,7 +16,7 @@ router.get("/", authenticate, async (req, res, next)=> {
   }
 });
 
-router.post("/", authenticate, async (req, res, next) =>{
+router.post("/", async (req, res, next) => {
   const { date, note, productIds } = req.body;
 
   try {
@@ -27,34 +27,35 @@ router.post("/", authenticate, async (req, res, next) =>{
         customerId: req.user.id,
         items: {
           create: productIds.map((productId) => ({
-            product: { connect: { id: +productId } }
+            productId: +productId,
           })),
         },
       },
     });
+
     res.status(201).json(order);
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
 router.get("/:id", authenticate, async (req, res, next) => {
-  const { id } = req.params
-  
+  const { id } = req.params;
+
   try {
     const order = await prisma.order.findUniqueOrThrow({
       where: { id: +id },
-      include: { items: { include: { product: true } } },
+      include: { items: { include: { product: true, }, }, },
     });
 
-    if(order.customerId !== req.user.id) {
-      throw { status: 403, message: "You do not own this order."};
+    if (order.customerId !== req.user.id) {
+      throw { status: 403, message: "You do not own this order." };
     }
 
     res.json(order);
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;

@@ -46,5 +46,5 @@ Authorization: Bearer {{token}}
 
 ### Get Specific Order
 @token = {{login.response.body.token}}
-GET http://localhost:3000/orders/1
+GET http://localhost:3000/orders/6
 Authorization: Bearer {{token}}

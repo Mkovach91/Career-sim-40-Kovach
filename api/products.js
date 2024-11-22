@@ -22,11 +22,7 @@ router.get("/:id", async (req, res, next) => {
           id: +id, 
         },
         include: {
-          orders: {
-            where: {
-              customerId: req.user.id,
-            },
-          },
+          orders: true, 
         },
       });
 
@@ -34,9 +30,14 @@ router.get("/:id", async (req, res, next) => {
         return res.status(404).json({ message: "Product not found" });
       }
 
+      const filteredOrders = productWithOrders.orders.filter(
+        (order) => order.customerId === req.user.id
+      );
+
+      productWithOrders.orders = filteredOrders;
+
       return res.json(productWithOrders);
     }
-
     const product = await prisma.product.findUnique({
       where: {
         id: +id,
