@@ -32,3 +32,19 @@ Authorization: Bearer {{token}}
 GET http://localhost:3000/orders
 Authorization: Bearer {{token}}
 
+### Create a New Order
+@token = {{login.response.body.token}}
+POST http://localhost:3000/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "date": "2024-11-22",
+  "note": "Please deliver quickly",
+  "productIds": [1, 2, 3]
+}
+
+### Get Specific Order
+@token = {{login.response.body.token}}
+GET http://localhost:3000/orders/1
+Authorization: Bearer {{token}}
